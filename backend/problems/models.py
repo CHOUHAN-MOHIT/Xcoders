@@ -15,7 +15,7 @@ class Problem(models.Model):
     tag = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.problem_name
+        return self.name
 
 class Test(models.Model):
     problem = models.ForeignKey(Problem , on_delete=models.CASCADE)
@@ -42,4 +42,4 @@ class Solution(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username + " submitted " + self.problem.problem_name
+        return self.user.name + " submitted " + self.problem.name

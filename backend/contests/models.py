@@ -13,3 +13,8 @@ class ContestProblem(Problem):
 
     def __str__(self):
         return f"{self.name} (Contest Problem)"
+
+class ContestRegistration(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
+    registration_time = models.DateTimeField(auto_now_add=True)
