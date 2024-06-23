@@ -2,3 +2,4 @@ venv
 *.pyc
 Docs
 backend/staticfiles
+backend/db.sqlite3

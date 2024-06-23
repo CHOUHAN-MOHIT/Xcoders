@@ -14,7 +14,7 @@ def execute_cpp(input):
   
     # store output of the program as a byte string in s 
     s = subprocess.check_output("g++ code.cpp -o out", shell=True)
-    s = subprocess.check_output(".\out.exe", stdin=data , shell=True) 
+    s = subprocess.check_output("./out", stdin=data , shell=True)
     # decode s to a normal string 
     return s.decode("utf-8")
 
