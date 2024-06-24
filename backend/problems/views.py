@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from .models import Problem, Solution , Test
 from .serializers import ProblemSerializer , SubmissionSerializer
-from . import helper
+from . import helper , docker_utility
 
 class ProblemListView(generics.ListAPIView):
     queryset = Problem.objects.all()
@@ -31,7 +31,7 @@ class SubmissionCreateView(APIView):
             code = serializer.validated_data.get('code')
             language = serializer.validated_data.get('language')
 
-            verdict = helper.evaulate_code(code , language , test)
+            verdict = docker_utility.evaulate_code_in_docker(code , language , test)
             serializer.validated_data['verdict'] = verdict
             serializer.save()
             return Response(serializer.data , status=status.HTTP_201_CREATED)
