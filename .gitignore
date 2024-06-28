@@ -3,3 +3,4 @@ venv
 Docs
 backend/db.sqlite3
 backend/out.exe
+frontend/
