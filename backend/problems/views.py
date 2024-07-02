@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from .models import Problem, Solution , Test
-from .serializers import ProblemSerializer , SubmissionSerializer
-from . import helper , docker_utility
+from .serializers import ProblemSerializer , SubmissionSerializer , ProblemDetailSerializer
+from . import helper
 
 class ProblemListView(generics.ListAPIView):
     queryset = Problem.objects.all()
@@ -19,7 +19,7 @@ class ProblemDetailView(APIView):
 
     def get(self, request, pk, format=None):
         problem = self.get_object(pk)
-        serializer = ProblemSerializer(problem)
+        serializer = ProblemDetailSerializer(problem)
         return Response(serializer.data)
 
 class SubmissionCreateView(APIView):
@@ -31,7 +31,7 @@ class SubmissionCreateView(APIView):
             code = serializer.validated_data.get('code')
             language = serializer.validated_data.get('language')
 
-            verdict = docker_utility.evaulate_code_in_docker(code , language , test)
+            verdict = helper.evaulate_code(code , language , test)
             serializer.validated_data['verdict'] = verdict
             serializer.save()
             return Response(serializer.data , status=status.HTTP_201_CREATED)

@@ -10,15 +10,22 @@ class Problem(models.Model):
     ('easy' , 'easy'),
     )
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    statement = models.TextField()
+    constraints = models.TextField()
     difficulty = models.CharField(max_length=10, choices=Difficulty_choices)
     tag = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
 
+class Example(models.Model):
+    problem = models.ForeignKey(Problem ,related_name='examples', on_delete=models.CASCADE)
+    input = models.TextField()
+    output = models.TextField()
+    explaination = models.TextField()
+
 class Test(models.Model):
-    problem = models.ForeignKey(Problem , on_delete=models.CASCADE)
+    problem = models.ForeignKey(Problem , related_name='tests', on_delete=models.CASCADE)
     input = models.TextField()
     output = models.TextField()
 
